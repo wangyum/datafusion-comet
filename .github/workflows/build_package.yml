@@ -24,6 +24,10 @@ concurrency:
 on:
   workflow_dispatch:
     inputs:
+      os:
+        description: 'Operating system: ubuntu-latest, ubuntu-24.04, ubuntu-22.04, ubuntu-20.04, windows-latest, windows-2022, windows-2019, macos-latest, macos-15, macos-14, macos-13 or macos-12'
+        required: true
+        default: 'ubuntu-22.04'
       rust:
         description: 'Rust version: stable, nightly or beta'
         required: true
@@ -44,7 +48,7 @@ on:
 jobs:
   release:
     name: Build release
-    runs-on: ubuntu-22.04
+    runs-on: ${{ github.event.inputs.os }}
     container:
       image: amd64/rust
     env:
