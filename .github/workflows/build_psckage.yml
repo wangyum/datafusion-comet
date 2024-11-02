@@ -37,9 +37,9 @@ on:
         required: true
         default: '2.12'
       spark:
-        description: 'Spark version: spark-3.3, spark-3.4, spark-3.5 or spark-4.0'
+        description: 'Spark version: 3.3, 3.4, 3.5 or 4.0'
         required: true
-        default: 'spark-3.5'
+        default: '3.5'
 
 jobs:
   release:
