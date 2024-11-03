@@ -36,14 +36,10 @@ on:
         description: 'JDK version: 8, 11, 17 or 21'
         required: true
         default: '8'
-      scala:
-        description: 'Scala version: 2.12 or 2.13'
+      profiles:
+        description: 'Additional build profiles: -Pspark-3.5 -Pscala-2.12'
         required: true
-        default: '2.12'
-      spark:
-        description: 'Spark version: 3.3, 3.4, 3.5 or 4.0'
-        required: true
-        default: '3.5'
+        default: '-Pspark-3.5'
 
 jobs:
   release:
@@ -52,7 +48,7 @@ jobs:
     container:
       image: amd64/rust
     env:
-      JAVA_VERSION: 8
+      JAVA_VERSION: ${{ github.event.inputs.jdk }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Rust & Java toolchain
@@ -71,7 +67,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-rust-maven-
       - name: Build Comet
-        run: make release PROFILES="-Pspark-${{ github.event.inputs.spark }} -Pscala-${{ github.event.inputs.scala }}"
+        run: make release PROFILES="${{ github.event.inputs.profiles }}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
