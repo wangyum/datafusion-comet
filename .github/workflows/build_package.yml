@@ -74,3 +74,4 @@ jobs:
         with:
           name: comet-spark-package
           path: spark/target/comet-spark-*.jar
+          if-no-files-found: error
